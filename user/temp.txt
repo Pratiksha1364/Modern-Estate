@@ -1,0 +1,65 @@
+<section class="w3l-blog-single">
+    <div class="single blog">
+        <div class="wrapper">
+                <h3 class="heading-title">Your Feedback</h3>
+<div class="container" style="width:100%;">
+<form method="POST">
+  <div class="feedback">
+    <div class="rating">
+      <input type="radio" name="star" id="rating-5" value="5" required>
+      <label for="rating-5"></label>
+      <input type="radio" name="star" id="rating-4" value="4" >
+      <label for="rating-4"></label>
+      <input type="radio" name="star" id="rating-3" value="3" >
+      <label for="rating-3"></label>
+      <input type="radio" name="star" id="rating-2" value="2" >
+      <label for="rating-2"></label>
+      <input type="radio" name="star" id="rating-1" value="1" >
+      <label for="rating-1"></label>
+    </div>
+  </div>
+ <div class="main-input">
+          <label for="nm">Message</label><br>
+		<input type="text" name="comment" id="nm" placeholder="Any Comment" class="contact-input" style="width: auto; margin:auto;
+         color: #666;background: #fff;border: none; padding: 7px 15px;font-size: 17px; border: 2px solid #eee;"required/ >	
+         <input type="button" name="sub" value="Submit" class="btn btn-block btn-primary" style="margin-top:30px; width:100px; font-size:17px; ">
+	</form>
+        </div>
+      
+      <?php
+      if(isset($_POST['sub']))
+      {
+        
+      $status=1;
+      $a=$_SESSION['gmail'];
+      $query3="SELECT * FROM login_table WHERE EMAIL='$a'";
+      $ans3=mysqli_query($con,$query3);
+      $fetchdetails= mysqli_fetch_array($ans3);
+      $lid = $fetchdetails['LOGIN_ID'];
+      date_default_timezone_set("Asia/calcutta");
+      $dt=date('H:m:s d/m/y');
+      $star=$_POST['star'];
+      $msg=$_POST['comment'];
+          $query="INSERT INTO feedback_table (LOGIN_ID,RATING,COMMENT,STATUS,DATE/TIME) VALUES('$lid','$star','$msg','$status','$dt')";
+          $res=mysqli_query($con,$query);
+          $num=mysqli_num_rows($res);
+          if(!res)
+          {
+        echo "SOMETHING WENT WRONG";
+        if (!isset($_GET['reload'])) {
+            echo '<meta http-equiv=Refresh content="0;url=user/feedback.php?reload=1">';
+                }  
+          
+          }  
+    
+    else{
+        echo "THANK YOU FOR YOUR FEEDBACK";
+    }
+}
+?>
+</div>
+
+  
+        </div>
+    </div>    
+</section>
